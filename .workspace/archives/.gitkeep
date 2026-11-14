@@ -1,0 +1,4 @@
+Local Smali Archives
+
+Store versioned `smali-<versionName>.<versionCode>.zip` archives in this directory.
+This folder is excluded from version control via `.gitignore`.

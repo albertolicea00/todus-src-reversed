@@ -1,0 +1,10 @@
+{
+  "_meta": {
+    "package": "cu.todus.android",
+    "apk_version": "2.1.2",
+    "version_code": 30102,
+    "format": "obfuscated → clean mapping",
+    "notes": "Derived from static analysis of JADX decompiled source (pending initial decompilation)"
+  },
+  "classes": {}
+}

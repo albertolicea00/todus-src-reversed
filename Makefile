@@ -1,0 +1,77 @@
+# Makefile — toDus Reverse Engineering Toolchain
+#
+# Targets:
+#   make decompile APK=path/to.apk   Decompile APK into src/, smali/, app/
+#   make verify APK=path/to.apk      Verify APK identity (SHA-256, package, version)
+#   make stats                        Show reconstruction links and review counts
+#   make inventory                    Save full reconstruction review queue as JSON
+#   make progress                     Refresh README progress bar from TODO.md
+#   make search Q="pattern"           Search decompiled Java source for a pattern
+#   make search-smali Q="pattern"     Search smali disassembly for a pattern
+#   make search-all Q="pattern"       Search both Java and smali
+#   make clean-src                    Remove all decompiled source (src/, smali/)
+#   make help                         Show this help
+#
+# Prerequisites:
+#   jadx, apktool, aapt/aapt2 (Android SDK), jq, shasum
+#
+# Examples:
+#   make decompile APK=.workspace/bin/cu.todus.android-v30102.apk
+#   make verify APK=.workspace/bin/cu.todus.android-v30102.apk
+#   make stats
+#   make search Q="todus.cu"
+
+.PHONY: compile-audit help decompile verify stats inventory progress test-reconstruction search search-smali search-all clean-src
+
+# Default APK path
+APK ?= .workspace/bin/cu.todus.android-v30102.apk
+
+help: ## Show available targets
+	@echo "toDus RE Toolchain"
+	@echo ""
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2}'
+	@echo ""
+	@echo "Variables:"
+	@echo "  APK=<path>   Target APK file (default: $(APK))"
+	@echo "  Q=<pattern>  Search pattern for grep"
+
+decompile: ## Decompile APK into src/ (JADX), smali/ (Apktool), app/ (resources)
+	@bash scripts/decompile.sh "$(APK)"
+
+verify: ## Verify APK identity — SHA-256, package, version, SDK levels
+	@bash scripts/verify-apk.sh "$(APK)"
+
+stats: ## Show reconstruction links and inconsistencies (not completion percentage)
+	@bash scripts/mapping-stats.sh
+
+inventory: ## Save exact source-to-clean review queue in .workspace/
+	@bash scripts/mapping-stats.sh --output .workspace/reconstruction-inventory.json
+	@python3 scripts/update-progress.py
+
+progress: ## Refresh README bar from completed TODO tasks
+	@python3 scripts/update-progress.py
+
+test-reconstruction: ## Run reconstruction unit tests (Python 3 + JDK)
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts/tests -v
+
+search: ## Search decompiled Java source (Q="pattern")
+	@bash scripts/search-strings.sh "$(Q)" --java
+
+search-smali: ## Search smali disassembly (Q="pattern")
+	@bash scripts/search-strings.sh "$(Q)" --smali
+
+search-all: ## Search both Java and smali (Q="pattern")
+	@bash scripts/search-strings.sh "$(Q)" --both
+
+clean-src: ## Remove decompiled source (src/ and smali/) — keeps app/ clean source
+	@echo "This will delete src/ and smali/ directories."
+	@read -p "Continue? [y/N] " confirm && [ "$$confirm" = "y" ] || exit 1
+	rm -rf src/ smali/
+	mkdir -p src smali
+	touch src/.gitkeep smali/.gitkeep
+	@echo "Removed decompiled contents from src/ and smali/"
+
+compile-audit: ## Compile clean Java against local jars (ANDROID_JAR=... BYTECODE_JAR=...)
+	@test -n "$(ANDROID_JAR)" || { echo "Set ANDROID_JAR to the installed SDK android.jar"; exit 2; }
+	@python3 scripts/compile-reconstruction.py --android-jar "$(ANDROID_JAR)" --bytecode-jar "$(or $(BYTECODE_JAR),.workspace/tools/target-bytecode.jar)" --apk "$(APK)"
