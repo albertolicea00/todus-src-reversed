@@ -149,6 +149,8 @@ This repository and its contents are covered under fair use for the purposes of 
 
 ## Related Repositories
 
+*Additional explorations, decompilations, and architectural analyses of Cuba's digital app and service ecosystem.*
+
 | Repository | Package | Description |
 | :--- | :--- | :--- |
 | [transfermovil-src-reversed](https://github.com/albertolicea00/transfermovil-src-reversed) | `cu.etecsa.cubacel.tr.tm` | Reverse-engineered source code, resources, and protocol analysis for ETECSA Transfermóvil (mobile banking, MiTransfer wallet, USSD/SMS, and Boulevard e-commerce). |
