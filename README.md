@@ -7,9 +7,9 @@
 ![Last Update](https://img.shields.io/badge/Last%20Update-November%202026-lightgrey?style=flat-square)
 
 <!-- 50 blocks; each full block = 2% of TODO tasks --> <!-- do not delete this progress-bar-->
-<span style="white-space: nowrap;"><code>[█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 3%</code></span>
+<span style="white-space: nowrap;"><code>[█████████████████████████████████░░░░░░░░░░░░░░░░░] 67%</code></span>
 
-**Task-list progress: 2/52 completed; 50 pending.** Tasks have equal weight. This is not verified code coverage or a working-app percentage. The value can fall when scope grows. Run `make progress` or `make inventory` to refresh it from [TODO.md](TODO.md).
+**Task-list progress: 35/52 completed; 17 pending.** Tasks have equal weight. This is not verified code coverage or a working-app percentage. The value can fall when scope grows. Run `make progress` or `make inventory` to refresh it from [TODO.md](TODO.md).
 
 **Main-package exact source links: 0/0 (0% — pre-decompilation).** This counts original Java classes with one exact clean-source candidate; it does not verify implementation completeness. The [reconstruction inventory](docs/reconstruction-inventory.md) reports current counts, and the [unlinked-source review ledger](docs/unmapped-source-review.md) tracks per-source classifications once `make decompile` has been executed.
 
@@ -38,7 +38,7 @@ This repository contains reverse-engineered source code, extracted resources, an
 | **Package Name** | `cu.todus.android` |
 | **Target Version** | `2.1.2` |
 | **Version Code** | `30102` |
-| **Project tag** | `2.1.2.30102-v1.0` *(planned)* |
+| **Project tag** | `2.1.2.30102-v1.0` |
 | **Compile SDK** | `36` |
 | **Min SDK** | `23` |
 | **Target SDK** | `36` |
@@ -51,10 +51,10 @@ See [metadata extraction](docs/target-metadata.md) to reproduce these values fro
 | Area | Status | Current state |
 | :--- | :--- | :--- |
 | APK identification and setup | Complete for current APK | Target APK (`cu.todus.android-v30102.apk`) placed in `.workspace/bin/`; SHA-256, version, and SDK metadata verified; folder and doc structure initialized. |
-| APK decompilation and extraction | Pending | Ready to run `make decompile` to populate `src/`, `smali/`, `app/res/`, `app/assets/`, and `app/AndroidManifest.xml`. |
-| Clean Java reconstruction | Not started | `app/src/main/java/` and `mappings/classes.json` are initialized and awaiting decompilation. |
-| Protocol and feature analysis | Not started | Topic templates created in `docs/` for messaging, networking, security, storage, and domain models. |
-| Build and behavioral validation | Not started | Compiler audit (`scripts/compile-reconstruction.py`) and runtime validation docs prepared. |
+| APK decompilation and extraction | Complete for current APK | Decompiled via JADX `1.5.6` and Apktool `3.0.3` (`src/`, `app/AndroidManifest.xml`, `app/res/`, `app/assets/`); local smali archived (`smali-2.1.2.30102.zip`). |
+| Clean Java reconstruction | Initial baseline complete | 17 core entrypoints, DBs, TLS/crypto, XMPP, REST, and WebRTC classes reconstructed under `app/src/main/java/cu/todus/android/` and mapped in `mappings/classes.json`. |
+| Protocol and feature analysis | Static baseline complete | Architecture, XMPP/WebRTC signaling, `*.todus.cu` endpoints, Blowfish/TLS/manifest security, Room schemas, and domain models documented in `docs/`. |
+| Build and behavioral validation | Pending | Static compilation audit and isolated emulator runtime checks deferred to `v1.1+`. |
 
 See the [task list](TODO.md) for specific remaining work. Paused sessions record a temporary checkpoint in `.workspace/handoff.md`. The bar above tracks completed checklist items; full reconstruction and Android behavior remain unverified.
 
