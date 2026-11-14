@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:paddingLeft="13.0dp" android:paddingTop="11.0dp" android:paddingRight="13.0dp" android:paddingBottom="8.0dp" android:layout_width="match_parent" android:layout_height="130.0dp" android:paddingHorizontal="13.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:id="@id/incoming_call_notification_header" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true">
+        <LinearLayout android:orientation="vertical" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:textSize="17.0sp" android:textStyle="bold" android:textColor="#3a3a3a" android:id="@id/incoming_call_notification_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/call_from" />
+            <TextView android:textSize="16.0sp" android:id="@id/incoming_call_notification_content_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
+        </LinearLayout>
+        <ImageView android:id="@id/caller_photo" android:layout_width="42.0dp" android:layout_height="42.0dp" android:contentDescription="caller photo" />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:id="@id/incoming_call_notification_footer" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+        <Button android:id="@id/answer_call_button" android:text="@string/answer" android:layout_marginEnd="5.0dp" android:backgroundTint="#00b37a" style="@style/incoming_call_notification_actions_style" />
+        <Button android:id="@id/hang_up_button" android:layout_marginLeft="5.0dp" android:text="@string/hang_up" android:backgroundTint="#e84949" style="@style/incoming_call_notification_actions_style" />
+    </LinearLayout>
+</RelativeLayout>

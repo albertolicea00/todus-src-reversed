@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="are_u_going_to_eliminate_this_msgs">
+        <item quantity="one">Are you going to eliminate this message?</item>
+        <item quantity="other">Are you going to eliminate this messages?</item>
+    </plurals>
+    <plurals name="exo_controls_fastforward_by_amount_description">
+        <item quantity="one">Fast forward %d second</item>
+        <item quantity="other">Fast forward %d seconds</item>
+    </plurals>
+    <plurals name="exo_controls_rewind_by_amount_description">
+        <item quantity="one">Rewind %d second</item>
+        <item quantity="other">Rewind %d seconds</item>
+    </plurals>
+    <plurals name="member_plural">
+        <item quantity="one">member</item>
+        <item quantity="other">members</item>
+    </plurals>
+    <plurals name="mtrl_badge_content_description">
+        <item quantity="one">%d new notification</item>
+        <item quantity="other">%d new notifications</item>
+    </plurals>
+    <plurals name="numberOfNewMessages">
+        <item quantity="one">%d new message</item>
+        <item quantity="other">%d new messages</item>
+    </plurals>
+    <plurals name="views">
+        <item quantity="one">View</item>
+        <item quantity="other">Views</item>
+    </plurals>
+</resources>

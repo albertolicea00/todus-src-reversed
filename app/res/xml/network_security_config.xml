@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.37.41.159</domain>
+        <domain includeSubdomains="true">10.37.41.164</domain>
+        <domain includeSubdomains="true">10.37.41.180</domain>
+        <domain includeSubdomains="true">10.37.41.184</domain>
+        <domain includeSubdomains="true">10.37.41.190</domain>
+        <domain includeSubdomains="true">10.37.41.191</domain>
+        <domain includeSubdomains="true">10.37.41.194</domain>
+        <domain includeSubdomains="true">10.37.41.195</domain>
+        <domain includeSubdomains="true">10.37.41.199</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">im.todus.cu</domain>
+        <domain includeSubdomains="true">todus.cu</domain>
+        <domain includeSubdomains="true">chat.todus.cu</domain>
+        <domain includeSubdomains="true">s3.todus.cu</domain>
+        <domain includeSubdomains="true">client.todus.cu</domain>
+        <domain includeSubdomains="true">auth.todus.cu</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>
