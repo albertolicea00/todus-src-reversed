@@ -1,35 +1,39 @@
-# Architecture Overview
+# Architecture & Components
 
-Target: `cu.todus.android` v2.1.2 (versionCode `30102`), SHA-256 `8da7f305e9763e542b087935714b726fafa3e26105e9e6f96261074c56461ce1`.
+Static analysis of `cu.todus.android` (`2.1.2`, `versionCode` `30102`, `buildType` `pFast`, `flavor` `production`).
 
-> [!NOTE]
-> **Status:** Pre-decompilation baseline. Only APK badging metadata (`aapt2 dump badging`) has been extracted so far. Run `make decompile` to populate `src/`, `smali/`, `app/res/`, `app/assets/`, and `app/AndroidManifest.xml`.
+## Application Entrypoint & DI
 
-## Build & Package Properties
+- **`cu.todus.android.ToDusApp`** (`Application`): Bootstraps dependency injection modules (`PreferencesModule`, `DatabaseModule`, `RetrofitModule`, `MainModule`, `MediaModule`), `Z17CameraModule`, `Z17VideoModule`, `Z17CoilDecoders`, `Z17Markown`, and `SentryDataSource`, then observes `appState` to start `AliveService`, XMPP, and notification channels.
+- **`cu.todus.android.BuildConfig`**: `APPLICATION_ID = "cu.todus.android"`, `BUILD_TYPE = "pFast"`, `FLAVOR = "production"`, `VERSION_CODE = 30102`, `VERSION_NAME = "2.1.2"`.
 
-| Property | Value |
-| :--- | :--- |
-| **Package Name** | `cu.todus.android` |
-| **Version Name** | `2.1.2` |
-| **Version Code** | `30102` |
-| **Compile SDK** | `36` (Android 16) |
-| **Min SDK** | `23` (Android 6.0) |
-| **Target SDK** | `36` (Android 16) |
-| **APK Size** | 71,554,413 bytes (~68 MB) |
+## Manifest Components (`app/AndroidManifest.xml`)
 
-## Declared Permissions (from `aapt2 dump badging`)
+### Activities
+- **`cu.todus.android.uiCompose.loading.LoadingActivity`** (`MAIN`/`LAUNCHER`, `Theme.ToDus.Starting`): Splash/bootstrap Jetpack Compose activity observing `ToDusApp.appState`.
+- **`cu.todus.android.uiCompose.main.MainActivity`** (`singleTask`): Main Jetpack Compose host handling deep links for `chat.todus.cu` and `todus.cu` (`https`/`http`).
+- **`cu.todus.android.uiCompose.start.StartActivity`**, **`cu.todus.android.uiCompose.auth.AuthActivity`**: Onboarding and SMS/token authentication flows.
+- **`cu.todus.android.uiCompose.call.CallActivity`**, **`AudioCallActivity`**, **`VideoCallActivity`** (`supportsPictureInPicture="true"`): WebRTC call UI.
+- **`cu.todus.android.uiCompose.player.PlayerActivity`** (`supportsPictureInPicture="true"`): Media player.
+- **`cu.todus.android.uiCompose.intentReceiver.IntentReceiverActivity`**: Share target (`SEND`, `SEND_MULTIPLE`, `SENDTO` `sms:`/`smsto:`).
 
-- Account & Identity: `AUTHENTICATE_ACCOUNTS` (maxSdk 22), `GET_ACCOUNTS` (maxSdk 22), `READ_CONTACTS`
-- Network & Connectivity: `INTERNET`, `ACCESS_NETWORK_STATE`, `WAKE_LOCK`, `RECEIVE_BOOT_COMPLETED`
-- Telephony & SMS: `READ_PHONE_STATE`, `CALL_PHONE`, `READ_SMS`, `RECEIVE_SMS`
-- Media & Hardware: `CAMERA`, `RECORD_AUDIO`, `MODIFY_AUDIO_SETTINGS`, `VIBRATE`, `BODY_SENSORS`
-- Storage: `READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `MANAGE_EXTERNAL_STORAGE`, `READ_MEDIA_IMAGES`, `READ_MEDIA_VIDEO`
-- Calendar & Location: `READ_CALENDAR`, `WRITE_CALENDAR`, `ACCESS_COARSE_LOCATION`, `ACCESS_FINE_LOCATION`, `ACCESS_BACKGROUND_LOCATION`
-- App Updates: `REQUEST_INSTALL_PACKAGES`
+### Services, Receivers & Providers
+- **`cu.todus.android.accountManager.AuthenticatorService`**: Android AccountAuthenticator service.
+- **`cu.todus.android.firebase.ToDusFirebaseMessagingService`**: Push notification receiver (`FirebaseMessagingService`).
+- **`cu.todus.android.alive.AliveService`** (`foregroundServiceType="remoteMessaging"`): Persistent XMPP keepalive foreground service.
+- **`cu.todus.android.downloadOffline.DownloadOfflineService`** (`foregroundServiceType="remoteMessaging"`): Offline message/media sync service.
+- **`cu.todus.android.utils.UpdateDownloadService`** (`foregroundServiceType="dataSync"`): Self-update APK downloader.
+- **`cu.todus.android.webrtc.service.CallService`** (`foregroundServiceType="phoneCall"`): Active WebRTC call foreground service.
+- **Receivers**: `DirectReplyIntent`, `CancelTransferReceiver`, `CallIntentReceiver`.
+- **Providers**: `androidx.core.content.FileProvider` (`cu.todus.android.provider`), `FirebaseInitProvider`, `JLatexMathInitProvider`.
 
-## Pending Analysis Sections (Post-Decompilation)
+## Bundled Assets & Native Libraries
 
-- **Manifest Components:** Activities, Services, BroadcastReceivers, ContentProviders, exported flags, and deep links.
-- **Application Class & Dependency Injection:** Startup initialization, DI framework (Dagger/Hilt/Koin), and global state.
-- **Package Structure & Obfuscation:** ProGuard/R8 obfuscation patterns, Kotlin vs. Java ratio, and module boundaries.
-- **Bundled Assets & Native Libraries:** Inspect `app/assets/` and any `.so` libraries (e.g., WebRTC, audio codecs, SQLCipher, or custom JNI).
+- **Assets (`app/assets/`)**: `PublicSuffixDatabase.list` (132 KB, OkHttp public suffix list).
+- **Native Libraries** (`arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`):
+  - `libjingle_peerconnection_so.so` (WebRTC native engine)
+  - `libandroidx.graphics.path.so`
+  - `libdatastore_shared_counter.so`
+  - `libimage_processing_util_jni.so`
+  - `libsurface_util_jni.so`
+- **Obfuscation**: Application packages under `cu.todus.android.*` and `cu.todus.proto.ApiProto` retain readable Kotlin/Java class, method, and `@Metadata` names; R8 obfuscates third-party/support libraries (`pe.*`, `te.*`, `nf.*`, `mi.*`) and Kotlin lambda/coroutine synthetics.
