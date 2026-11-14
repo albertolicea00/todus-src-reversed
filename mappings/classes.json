@@ -3,8 +3,94 @@
     "package": "cu.todus.android",
     "apk_version": "2.1.2",
     "version_code": 30102,
-    "format": "obfuscated → clean mapping",
-    "notes": "Derived from static analysis of JADX decompiled source (pending initial decompilation)"
+    "format": "obfuscated -> clean mapping",
+    "notes": "toDus 2.1.2 ships minimally obfuscated Kotlin/Java packages under cu.todus.android.*, cu.todus.proto.ApiProto, and cu.z17.*."
   },
-  "classes": {}
+  "classes": {
+    "cu.todus.android.BuildConfig": {
+      "clean": "cu.todus.android.BuildConfig",
+      "role": "Generated build constants (applicationId, versionCode 30102, versionName 2.1.2, buildType pFast)",
+      "confidence": "high"
+    },
+    "cu.todus.android.ToDusApp": {
+      "clean": "cu.todus.android.ToDusApp",
+      "role": "Application entrypoint: DI graph bootstrap, Sentry init, XMPP/Room startup, AliveService management, logout",
+      "confidence": "high"
+    },
+    "cu.todus.android.constants.Service": {
+      "clean": "cu.todus.android.constants.Service",
+      "role": "Environment URLs (LOCAL/PROD_2/PROD/F5), XMPP domains (im.todus.cu, muclight, ch, status), and REST endpoints",
+      "confidence": "high"
+    },
+    "cu.todus.android.backup.AESUtils": {
+      "clean": "cu.todus.android.backup.AESUtils",
+      "role": "Backup cipher helper (uses Blowfish/CBC/PKCS5Padding with static IV 'abcdefgh' despite class name)",
+      "confidence": "high"
+    },
+    "cu.todus.android.db.ToDusDatabase": {
+      "clean": "cu.todus.android.db.ToDusDatabase",
+      "role": "Primary Room database (toDus.db v11, 15 entities, 9 migrations 2->11)",
+      "confidence": "high"
+    },
+    "cu.todus.android.db.CacheDatabase": {
+      "clean": "cu.todus.android.db.CacheDatabase",
+      "role": "Secondary Room cache database (cache.db v6: Product, WelcomeMessage, BotShortcut)",
+      "confidence": "high"
+    },
+    "cu.todus.android.di.RetrofitModule": {
+      "clean": "cu.todus.android.di.RetrofitModule",
+      "role": "OkHttp/Retrofit DI module, Protobuf/Gson converters, BODY logging, and bundled certPool TLS verification",
+      "confidence": "high"
+    },
+    "cu.todus.android.rest.TokenAuthenticator": {
+      "clean": "cu.todus.android.rest.TokenAuthenticator",
+      "role": "OkHttp Authenticator, Bearer token refresh, User-Agent header injection, and static map URL builder",
+      "confidence": "high"
+    },
+    "cu.todus.android.rest.auth.AuthService": {
+      "clean": "cu.todus.android.rest.auth.AuthService",
+      "role": "Retrofit interface for auth.todus.cu Protobuf and link preview endpoints",
+      "confidence": "high"
+    },
+    "cu.todus.android.xmpp.ToDusXMPPFactoryConfiguration": {
+      "clean": "cu.todus.android.xmpp.ToDusXMPPFactoryConfiguration",
+      "role": "Smack XMPPTCPConnectionConfiguration builder for im.todus.cu with MD5 resource and compression",
+      "confidence": "high"
+    },
+    "cu.todus.android.xmpp.iq.call.GetCredentialsIQ": {
+      "clean": "cu.todus.android.xmpp.iq.call.GetCredentialsIQ",
+      "role": "XMPP IQ query for TURN server credentials (namespace todus:turn:cred)",
+      "confidence": "high"
+    },
+    "cu.todus.android.webrtc.SignalingCommand": {
+      "clean": "cu.todus.android.webrtc.SignalingCommand",
+      "role": "WebRTC call signaling commands (CALL, PICKED, OFFER, ANSWER, ICE, CONFIG, REJECT, END, CHECKING_*)",
+      "confidence": "high"
+    },
+    "cu.todus.android.webrtc.ConfigKey": {
+      "clean": "cu.todus.android.webrtc.ConfigKey",
+      "role": "WebRTC media toggle keys (CAMERA, MIC, SOUND)",
+      "confidence": "high"
+    },
+    "cu.todus.android.webrtc.service.CallService": {
+      "clean": "cu.todus.android.webrtc.service.CallService",
+      "role": "Foreground phoneCall service managing active WebRTC call notifications",
+      "confidence": "high"
+    },
+    "cu.todus.android.alive.AliveService": {
+      "clean": "cu.todus.android.alive.AliveService",
+      "role": "Foreground remoteMessaging keepalive service for XMPP connectivity",
+      "confidence": "high"
+    },
+    "cu.todus.android.uiCompose.loading.LoadingActivity": {
+      "clean": "cu.todus.android.uiCompose.loading.LoadingActivity",
+      "role": "LAUNCHER Compose activity observing ToDusApp.appState for initial routing",
+      "confidence": "high"
+    },
+    "cu.todus.android.uiCompose.main.MainActivity": {
+      "clean": "cu.todus.android.uiCompose.main.MainActivity",
+      "role": "Primary Compose host activity handling chat UI, deep links, and update gates",
+      "confidence": "high"
+    }
+  }
 }
