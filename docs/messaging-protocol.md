@@ -1,27 +1,31 @@
 # Messaging & Real-Time Protocol
 
-Target: `cu.todus.android` v2.1.2 (versionCode `30102`).
+Static analysis of `cu.todus.android.xmpp.*`, `cu.todus.android.webrtc.*`, and `cu.todus.proto.ApiProto`.
 
-> [!NOTE]
-> **Status:** Structural template (pending decompilation). Document confirmed wire protocols, stanza/frame formats, and signaling flows once `src/` and `smali/` are extracted.
+## XMPP Transport (`im.todus.cu`)
 
-## Scope
+toDus uses **Smack** (`org.jivesoftware.smack.tcp.XMPPTCPConnection`) configured by `cu.todus.android.xmpp.ToDusXMPPFactoryConfiguration`:
+- **Production domain**: `im.todus.cu` (`Service.Config.SERVER_DOMAIN`); test host `im-test.todus.cu` (`F5` environment); local dev `10.37.41.107`.
+- **Ports** (`Service.provideIMPort`): `1756` (`LOCAL`, `PROD`, `F5`) and `5443` (`PROD_2`).
+- **Resource**: `<md5(username)>_Android` (`HashUtils.INSTANCE.md5(username) + "_Android"`).
+- **Compression & TLS**: `setCompressionEnabled(true)`, `setSendPresence(true)`, and `setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)` with custom `SSLSocketFactory` / `X509TrustManager` from `RetrofitModule.allowAllCertificated()` when `AppVolatileState.isCertificateValid == false`.
+- **Message Limits** (`Service.Config`): `MAX_MSG_TEXT_SIZE = 8192`, `MAX_MESSAGE_LENGTH = 65536`.
 
-toDus is an instant messaging and collaborative platform developed at the Universidad de las Ciencias Informáticas (UCI) in collaboration with ETECSA. This document tracks the reverse-engineered messaging transport and real-time signaling layer.
+## Subdomains & MUC / Channels / Status
 
-## Areas to Document
+Defined in `cu.todus.android.constants.Service.Config`:
+- **Group Chat (MUC Light)**: `muclight.im.todus.cu` (`SERVER_NAME_MUC = "muclight"`).
+- **Channels**: `ch.im.todus.cu` (`SERVER_NAME_CHANNELS = "ch"`).
+- **Statuses (Stories)**: `status@status.im.todus.cu` (`STATUS_NAMESPACE = "status"`).
+- **Reactions**: `REACTION_NAMESPACE = "reaction"`.
 
-1. **Core Messaging Transport (`im.todus.cu`)**
-   - Underlying transport protocol (XMPP / WebSocket / gRPC / Protobuf / custom TCP framing).
-   - Connection lifecycle, keep-alive/ping intervals, reconnection backoff, and background service management.
-   - Message serialization format (Protobuf schemas, XML stanzas, or JSON payloads).
+## Custom XMPP Extensions & IQ Namespaces
 
-2. **Conversation & Group Semantics**
-   - 1-to-1 chat delivery states (sent, delivered, read receipts, typing indicators, presence).
-   - Multi-user group chats, participant roles, invitations, and group metadata synchronization.
+- **Extensions (`src/cu/todus/android/xmpp/extension/`)**: `audio`, `button`, `call`, `chunk`, `contact`, `deleteOwnerMessage`, `deleted`, `edited`, `event`, `file`, `forward`, `gif`, `groups`, `image`, `link`, `location`, `mention`, `pubDeleted`, `pubEdited`, `reaction`, `refreshToDusId`, `statusExistence`, `sticker`, `streamVideo`, `video`, `voice`.
+- **IQ handlers (`src/cu/todus/android/xmpp/iq/`)**: `block`, `call` (`GetCredentialsIQ`, namespace `todus:turn:cred`), `channels`, `error`, `groups`, `last`, `near`, `offline`, `packet`, `privacy`, `push`, `roster`, `s3`, `status`, `version`.
 
-3. **Real-Time Communication & Signaling (`rtc.todus.cu`)**
-   - Voice notes, audio/video calling or live streaming signaling, STUN/TURN configuration, and codec negotiation.
+## Real-Time Signaling (WebRTC)
 
-4. **Business, Catalogs & Calendar Events**
-   - Structured message payloads for appointments/calendar sharing (`READ_CALENDAR` / `WRITE_CALENDAR`), business catalogs, and notification gateways.
+- **Native engine**: `libjingle_peerconnection_so.so` via `cu.todus.android.webrtc.peer.StreamPeerConnectionFactory`.
+- **ICE / STUN / TURN**: Hardcodes `stun:l.google.com:19302` plus dynamic TURN URIs retrieved over XMPP via `GetCredentialsIQ` (`todus:turn:cred`), configured with `PeerConnection.TlsCertPolicy.TLS_CERT_POLICY_INSECURE_NO_CHECK`, `SdpSemantics.UNIFIED_PLAN`, `IceTransportsType.ALL`, `BundlePolicy.MAXBUNDLE`, `RtcpMuxPolicy.REQUIRE`, and `iceCandidatePoolSize = 10`.
+- **Signaling commands (`SignalingCommand`)**: `CALL`, `PICKED`, `OFFER`, `ANSWER`, `ICE`, `CONFIG` (`ConfigKey`: `CAMERA`, `MIC`, `SOUND`), `REJECT`, `END`, `CHECKING_REQUEST`, `CHECKING_RESPONSE`.
