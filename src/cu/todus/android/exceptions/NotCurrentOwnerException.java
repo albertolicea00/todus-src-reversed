@@ -1,0 +1,22 @@
+package cu.todus.android.exceptions;
+
+import androidx.compose.runtime.internal.StabilityInferred;
+import cu.todus.android.R;
+import cu.todus.android.di.MainModule;
+import kotlin.Metadata;
+import kotlin.jvm.internal.y;
+
+/* JADX INFO: compiled from: r8-map-id-6f96ac19fe2c64a3894d8540d8e2f71367631717ee9450b2dd81fd70d133ae29 */
+/* JADX INFO: loaded from: classes6.dex */
+@StabilityInferred(parameters = 0)
+@Metadata(d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\b\u0007\u0018\u00002\u00020\u0001B\u0007¢\u0006\u0004\b\u0002\u0010\u0003¨\u0006\u0004"}, d2 = {"Lcu/todus/android/exceptions/NotCurrentOwnerException;", "Lcu/todus/android/exceptions/ToDusException;", "<init>", "()V", "app_productionPFast"}, k = 1, mv = {2, 3, 0}, xi = 48)
+public final class NotCurrentOwnerException extends ToDusException {
+    public static final int $stable = ToDusException.$stable;
+
+    /* JADX WARN: Illegal instructions before constructor call */
+    public NotCurrentOwnerException() {
+        String string = MainModule.INSTANCE.getInstance().getAppContext().getString(R.string.owner_init_error);
+        y.h(string, "getString(...)");
+        super(string, null, false, 6, null);
+    }
+}
