@@ -1,18 +1,13 @@
-# Unlinked main-package source review
+# Unmapped Source Review
 
-Target: `cu.todus.android-v30102.apk`, SHA-256
-`8da7f305e9763e542b087935714b726fafa3e26105e9e6f96261074c56461ce1`.
+Classification ledger for `src/cu/` (`2,066` JADX-decompiled Java files from `cu.todus.android-v30102.apk`).
 
-## Purpose and limits
+## Package Classification
 
-This ledger tracks Java source files in the main application package (`cu.todus.android`) that lack exact clean-source links in `app/src/main/java/`. The ledger is an audit queue, not a decompilation-success metric. JADX decompilation success and source-to-clean class identity links are separate measures, and a link does not prove behavioral equivalence.
-
-Classification categories:
-- `application behavior`: UI, routing, domain rules, persistence, messaging protocol, network, or security logic.
-- `application support`: shared helpers, base classes, adapters, or internal utilities supporting app behavior.
-- `generated`: resource/build output, synthetic bridges, binding code, or compiler-generated machinery (`BuildConfig`, `R`, R8 synthetic classes).
-- `third-party/library`: vendored or dependency implementation rather than toDus-specific behavior.
-
-## Current status
-
-Pending initial decompilation (`make decompile`). Populate package-by-package review tables after generating the baseline inventory with `make inventory`.
+| Package / Class Group | Classification | Role & Evidence |
+| :--- | :--- | :--- |
+| `cu.todus.android.BuildConfig`, `R.java`, `databinding.*` | Generated / build artifacts | Standard AGP build constants, resource IDs (`828 KB`), and ViewBinding classes. |
+| `cu.todus.android.ToDusApp` & `$*` synthetics | Application entrypoint | DI bootstrap, Sentry init, XMPP/Room startup, `AliveService` lifecycle; 17 core classes reconstructed in `app/src/main/java/cu/todus/android/` and mapped in `mappings/classes.json`. |
+| `cu.todus.android.{accountManager,alive,backup,connection,constants,contact,data,db,di,domain,downloadOffline,exceptions,firebase,image,location,media,migration,notification,repositories,rest,s3,sentry,service,session,uiCompose,utils,viewModel,volatileState,webrtc,xmpp}` | Application behavior (readable Kotlin/Java) | Minimally obfuscated first-party application packages; remaining classes beyond the 17 reconstructed core entrypoints are queued for incremental clean reconstruction. |
+| `cu.todus.proto.ApiProto` | Generated Protobuf models | `protoc`-generated request/response messages (`ProtoUserReserveRequest`, `ProtoUserRegisterRequest`, `ProtoUserAuthTokenRequest`, `ProtoAuthCheckRequest`, etc.). |
+| `cu.z17.*` | Bundled first-party/shared library | Shared `cu.z17.views.*`, `cu.z17.preferences.*`, and `cu.z17.singledi.*` UI/DI/Preferences library used by toDus. |

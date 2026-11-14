@@ -116,3 +116,9 @@ For changes to reconstruction on the same APK, compare internal release tags, fo
    ```
 
    Increase the internal version for subsequent releases on the same APK. The first release for a different APK starts at `v1.0`.
+
+## Baseline Archive Record
+
+| APK versionName | APK versionCode | Smali Archive | Archive SHA-256 |
+| :--- | ---: | :--- | :--- |
+| `2.1.2` | `30102` | `.workspace/archives/smali-2.1.2.30102.zip` | `bdd73296eff93ec7a8ee5775c8d4d011923e22a26537a71ff0c8a359b0991ab9` |
