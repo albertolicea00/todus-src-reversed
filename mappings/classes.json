@@ -91,6 +91,206 @@
       "clean": "cu.todus.android.uiCompose.main.MainActivity",
       "role": "Primary Compose host activity handling chat UI, deep links, and update gates",
       "confidence": "high"
+    },
+    "cu.todus.android.constants.CloudType": {
+      "clean": "cu.todus.android.constants.CloudType",
+      "role": "Media/attachment type constants (TYPE_FILE..TYPE_STATUS_IMAGE) and WorkManager upload/download data keys",
+      "confidence": "high"
+    },
+    "cu.todus.android.constants.HeadersChecker": {
+      "clean": "cu.todus.android.constants.HeadersChecker",
+      "role": "Checks whether an s3.todus.cu URL requires authentication headers (exempts official, catalog, videodown, status, stream)",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.ToDusException": {
+      "clean": "cu.todus.android.exceptions.ToDusException",
+      "role": "Base application exception carrying an optional retryFunction callback and canRetry flag",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.AuthenticationException": {
+      "clean": "cu.todus.android.exceptions.AuthenticationException",
+      "role": "ToDusException subclass for authentication failures ('auth error')",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.FileWriterException": {
+      "clean": "cu.todus.android.exceptions.FileWriterException",
+      "role": "ToDusException subclass for file write failures ('write file error')",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.HTTPException": {
+      "clean": "cu.todus.android.exceptions.HTTPException",
+      "role": "ToDusException data subclass holding HTTP status code and Companion.TYPE",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.NotCorrectQrException": {
+      "clean": "cu.todus.android.exceptions.NotCorrectQrException",
+      "role": "ToDusException subclass thrown on invalid QR code scan (R.string.wrong_qr_code)",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.NotCurrentOwnerException": {
+      "clean": "cu.todus.android.exceptions.NotCurrentOwnerException",
+      "role": "ToDusException subclass thrown when account owner initialization does not match current owner (R.string.owner_init_error)",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.PhoneAuthException": {
+      "clean": "cu.todus.android.exceptions.PhoneAuthException",
+      "role": "ToDusException subclass mapping phone auth/reservation/SMS error strings to ERROR_TYPE enum",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.ServerError": {
+      "clean": "cu.todus.android.exceptions.ServerError",
+      "role": "ToDusException subclass carrying message and raw errorBody string",
+      "confidence": "high"
+    },
+    "cu.todus.android.exceptions.ServerException": {
+      "clean": "cu.todus.android.exceptions.ServerException",
+      "role": "ToDusException subclass carrying message and numeric error code",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.AliveWelcomeMessageDataPreferences": {
+      "clean": "cu.todus.android.data.preferences.AliveWelcomeMessageDataPreferences",
+      "role": "Data class tracking Alive welcome message mockupSaved, lastShowed, and actualMax counts",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.AppStateStep": {
+      "clean": "cu.todus.android.data.preferences.AppStateStep",
+      "role": "Enum of onboarding and authentication flow states (LOADING..LOGIN_COMPLETED)",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.AppState": {
+      "clean": "cu.todus.android.data.preferences.AppState",
+      "role": "Persisted onboarding/auth state (appStep, savedNumber, clientUid, countryCode, lastTimeSmsWaSent)",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.CallQuality": {
+      "clean": "cu.todus.android.data.preferences.CallQuality",
+      "role": "Persisted WebRTC call sendQuality and receivingQuality preference levels",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.DataPreferences": {
+      "clean": "cu.todus.android.data.preferences.DataPreferences",
+      "role": "Persisted media public/auto-download flags, batteryPreference (BALANCED/ECO/FULL_TIME), uploadQuality, and defaultFormat",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.Owner": {
+      "clean": "cu.todus.android.data.preferences.Owner",
+      "role": "Persisted local account owner profile, credentials (username, password, token, expire), and JID helper getNameWithDomain()",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.ReactionsSelected": {
+      "clean": "cu.todus.android.data.preferences.ReactionsSelected",
+      "role": "Persisted list of user-selected emoji reactions",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.RootEnvironment": {
+      "clean": "cu.todus.android.data.preferences.RootEnvironment",
+      "role": "Persisted active Service.ApplicationEnvironment and rootUrl",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.preferences.RosterVersionManager": {
+      "clean": "cu.todus.android.data.preferences.RosterVersionManager",
+      "role": "SharedPreferences helper (roster_version_prefs) tracking last_synced_roster_version and last_local_version",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.cache.BotShortcut": {
+      "clean": "cu.todus.android.data.db.entity.cache.BotShortcut",
+      "role": "Cache Room entity representing a quick-action shortcut command for a bot",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.cache.Product": {
+      "clean": "cu.todus.android.data.db.entity.cache.Product",
+      "role": "Cache Room entity representing a cached catalog/store product listing",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.cache.WelcomeMessage": {
+      "clean": "cu.todus.android.data.db.entity.cache.WelcomeMessage",
+      "role": "Cache Room entity representing a cached welcome/onboarding message banner",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.configs.Config": {
+      "clean": "cu.todus.android.data.db.entity.configs.Config",
+      "role": "Room entity storing dynamic key/value configuration entries in the heritage table",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.configs.Heritage": {
+      "clean": "cu.todus.android.data.db.entity.configs.Heritage",
+      "role": "Tree-structured configuration helper representing a node with parent/children lookup",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.configs.Values": {
+      "clean": "cu.todus.android.data.db.entity.configs.Values",
+      "role": "Key constants for dynamic Config/Heritage feature keys",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Attachment": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Attachment",
+      "role": "Room entity representing a media/payload attachment bound to a Message with upload/download states and TYPE_* constants",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.ChunkEntity": {
+      "clean": "cu.todus.android.data.db.entity.toDus.ChunkEntity",
+      "role": "Room entity storing individual chunks of split long text messages (table message_chunks)",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Contact": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Contact",
+      "role": "Room entity representing a synchronized address-book contact entry and sync state",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.LinkedDevice": {
+      "clean": "cu.todus.android.data.db.entity.toDus.LinkedDevice",
+      "role": "Room entity and Gson model representing a linked web/desktop session device",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.MarkerAction": {
+      "clean": "cu.todus.android.data.db.entity.toDus.MarkerAction",
+      "role": "Room entity tracking XMPP chat marker / delivery-receipt actions on messages",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Message": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Message",
+      "role": "Room entity and Builder representing a chat message with delivery states, MessagePayload, and MessageEntity list",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Reaction": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Reaction",
+      "role": "Room entity representing an emoji reaction on a message or status",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Room": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Room",
+      "role": "Room entity representing a 1-to-1 chat, MUC-light group, channel, or card room with config map accessors",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.RosterChange": {
+      "clean": "cu.todus.android.data.db.entity.toDus.RosterChange",
+      "role": "Room entity logging pending or synced local contact roster mutations (ADD/DELETE/UPDATE)",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Status": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Status",
+      "role": "Room entity representing an ephemeral user status post (text, image, or video)",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.Sticker": {
+      "clean": "cu.todus.android.data.db.entity.toDus.Sticker",
+      "role": "Room entity representing an individual sticker within a StickerPack and its CDN URL builder",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.StickerPack": {
+      "clean": "cu.todus.android.data.db.entity.toDus.StickerPack",
+      "role": "Room entity representing a downloaded or available sticker pack",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.User": {
+      "clean": "cu.todus.android.data.db.entity.toDus.User",
+      "role": "Room entity representing a locally cached toDus user profile",
+      "confidence": "high"
+    },
+    "cu.todus.android.data.db.entity.toDus.UserRoomJoin": {
+      "clean": "cu.todus.android.data.db.entity.toDus.UserRoomJoin",
+      "role": "Room join entity linking a User to a Room with affiliation role (owner/admin/member/none)",
+      "confidence": "high"
     }
   }
 }
