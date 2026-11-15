@@ -7,9 +7,9 @@
 ![Last Update](https://img.shields.io/badge/Last%20Update-November%202026-lightgrey?style=flat-square)
 
 <!-- 50 blocks; each full block = 2% of combined TODO + source reconstruction progress --> <!-- do not delete this progress-bar-->
-<span style="white-space: nowrap;"><code>[████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 33%</code></span>
+<span style="white-space: nowrap;"><code>[█████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 34%</code></span>
 
-**Overall progress: 33%** (Task-list: 35/52 [67%]; Source reconstruction: 17/2066 [0.8%]). Run `make progress` or `make inventory` to refresh from [TODO.md](TODO.md) and `make stats`.
+**Overall progress: 34%** (Task-list: 35/52 [67%]; Source reconstruction: 57/2066 [2.8%]). Run `make progress` or `make inventory` to refresh from [TODO.md](TODO.md) and `make stats`.
 
 **Main-package exact source links: 17/2066 (0.8%).** This counts JADX-decompiled Java files under `src/cu/` with one exact clean-source candidate in `app/src/main/java/`; it does not verify implementation completeness. The [reconstruction inventory](docs/reconstruction-inventory.md) reports current counts, and the [unlinked-source review ledger](docs/unmapped-source-review.md) tracks per-source classifications (`2,049` classes remain unlinked for incremental reconstruction).
 

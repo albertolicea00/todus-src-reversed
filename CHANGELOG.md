@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-15 — cu.todus.android-v30102.apk — SHA-256: `8da7f305e9763e542b087935714b726fafa3e26105e9e6f96261074c56461ce1`
+
+- Reconstructed 20 Room entity classes across `cu.todus.android.data.db.entity.{cache,configs,toDus}` (`BotShortcut`, `Product`, `WelcomeMessage`, `Config`, `Heritage`, `Values`, `Attachment`, `ChunkEntity`, `Contact`, `LinkedDevice`, `MarkerAction`, `Message`, `Reaction`, `Room`, `RosterChange`, `Status`, `Sticker`, `StickerPack`, `User`, `UserRoomJoin`).
+- Reconstructed 20 constants, exception, and preference classes under `cu.todus.android.{constants,exceptions,data.preferences}` (`CloudType`, `HeadersChecker`, `ToDusException` hierarchy, `AppState`, `AppStateStep`, `CallQuality`, `DataPreferences`, `Owner`, `ReactionsSelected`, `RootEnvironment`, `RosterVersionManager`, `AliveWelcomeMessageDataPreferences`).
+- Updated `mappings/classes.json` (`17 -> 57` linked clean classes, `0` mapping issues) and refreshed `README.md` weighted reconstruction progress (`34%` overall; `57/2066` Java files).
+
 ## 2026-11-14 — cu.todus.android-v30102.apk — SHA-256: `8da7f305e9763e542b087935714b726fafa3e26105e9e6f96261074c56461ce1`
 
 - Initialized repository directory structure (`app/assets/`, `app/res/`, `app/src/main/java/`, `src/`, `smali/`, `mappings/evidence/`, `scripts/tests/`, `docs/`, `.workspace/bin/`, `.workspace/archives/`) matching `transfermovil-src-reversed` without starting APK decompilation yet.
